@@ -1,0 +1,4 @@
+ Instead, it lets you store data in a format that works more like JSON, which allows more flexibility in app creation.
+ We'll use a library called Mongoose, which is essentially the MongoDB version of an ORM.
+ We could create routes first and hope that we have an understanding of what our functionality will eventually be, 
+ but it’s usually easier to determine the functionality before establishing the routes that carry that out.
