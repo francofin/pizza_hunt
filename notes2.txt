@@ -1,0 +1,32 @@
+In Mongoose, though, we can instruct the parent to keep track of its children, not the other way around.
+Specifically, we need to tell Mongoose to expect an ObjectId and to tell it that its data comes from the Comment model.
+The ref property is especially important because it tells the Pizza model which documents to search to find the right comments.
+Luckily Mongoose has a built-in solution for this dilemma, known as virtuals. No need to create helpers and add complexity to the code.
+Virtuals allow us to build virtual properties that are not stired in the database.
+They're normally computed values that get evaluated when you try to access their properties. 
+Virtuals allow us to add more information to a database response so that 
+we don't have to add in the information manually with a helper before responding to the API request.
+
+Because we only care about comment count in respect to pizzas, we'll add the virtual to models/Pizza.js.
+we need to tell the schema that it can use virtuals.
+We set id to false because this is a virtual that Mongoose returns, and we don’t need it.
+The $push method works just the same way that it works in JavaScript—it adds data to an array.
+All of the MongoDB-based functions like $push start with a dollar sign ($),
+ making it easier to look at functionality and know what is built-in to MongoDB and what is a custom noun the developer is using.
+ Even though the pizza stored the comment, all we can see is the comment _id. Sound familiar? We also ran into this issue with SQL. 
+ There, we joined two tables to resolve the problem, but in MongoDB we'll populate a field.
+ To populate a field, just chain the .populate() method onto your query, 
+ passing in an object with the key path plus the value of the field you want populated.
+ Note that we also used the select option inside of populate(), 
+ so that we can tell Mongoose that we don't care about the __v field on comments either.
+  The minus sign - in front of the field indicates that we don't want it to be returned. 
+ If we didn't have it, it would mean that it would return only the __v field.
+ Lastly, we should set up the query so that the newest pizza returns first. Mongoose has a .sort() method to help with this. 
+ After the .select() method, use .sort({ _id: -1 }) to sort in DESC order by the _id value.
+ Now, we could transform the data in the controller itself every time it gets retrieved, 
+ but just like with virtuals, Mongoose has a more elegant solution.
+ Instead, we'll use getters to transform the data by default every time it's queried.
+ In programming, a getter is typically a special type of function that takes 
+ the stored data you are looking to retrieve and modifies or formats it upon return. Think of it like middleware for your data!
+ To use a getter in Mongoose, we just need to add the key get to the field we are looking to use it with in the schema. 
+ Just like a virtual, the getter will transform the data before it gets to the controller(s).
