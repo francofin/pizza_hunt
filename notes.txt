@@ -2,3 +2,73 @@
  We'll use a library called Mongoose, which is essentially the MongoDB version of an ORM.
  We could create routes first and hope that we have an understanding of what our functionality will eventually be, 
  but it’s usually easier to determine the functionality before establishing the routes that carry that out.
+ Despite seeming like a drawback, the rigid structure of SQL is actually its greatest strength and what makes it so prevalent in the workplace.
+ These changes precipitated the rise of NoSQL databases. With no strict column definitions and a resemblance to JSON,
+  NoSQL databases allow developers to handle rapidly shifting data needs with ease.
+  MongoDB stores data in a format similar to JSON, organized in collections rather than tables. 
+
+  Now, this flexibility can lead to potential issues, 
+  as the developer is responsible for adding data normalization and rules to ensure predictability.
+
+With MongoDB, if we realize that we need to include more data than we initially expected, we can just start adding it.
+Nosql allows for unstructured data, used for evolving data structure and large datasets
+SQL is scaled vertically while nosql is scaled horizontally
+Additionally, a single set of data in a collection is called a document (instead of a row, as it is in SQL). 
+And in place of columns, you’ll see fields which indicate the names of different pieces of data in a document. 
+Think of a field like an object's key or property name.
+
+MongoDB commands resemble JavaScript commands, 
+so you don’t have to spend much time getting familiar with them in the same way you had to learn the syntax for SQL.
+As previously mentioned, we'll use a library called Mongoose to handle the connection between the API and the MongoDB database.
+Object Document Mapper—offers more features that make the work easier to perform.
+Mongoose also provides us with a lot of similar capabilities that Sequelize offers, like data validation, prebuilt methods to perform actions on a MongoDB database collection, and much more.
+We could import the entire mongoose library, but we only need to worry about the Schema constructor and model function, so we'll just import them.
+We essentially create a schema, using the Schema constructor we imported from Mongoose, and define the fields with specific data types.
+Notice the empty brackets [] in the toppings field. This indicates an array as the data type. You could also specify Array in place of the brackets.
+
+
+And that's all there is to it! In the preceding code, mongoose.connect() tells Mongoose which database we want to connect to. 
+If the environment variable MONGODB_URI exists, like on Heroku when we deploy later, it will use that. Otherwise, 
+it will short-circuit to the local MongoDB server's database at mongodb://localhost/pizza-hunt. 
+The second argument in the example is a set of configuration options Mongoose asks for more information about
+
+MongoDB will find and connect to the database if it exists or create the database if it doesn't.
+
+Set it up so that the routes directory holds not only the routes but also the functionality for those endpoints to perform.
+
+Tightly follow MVC patterns and hold both the routes and functionality in a controllers directory.
+
+For this project, you’ll create the functionality in controllers and the endpoints in routes.
+You’ll end up with more files but much cleaner code.
+We'll create all of these functions as methods of the pizzaController object
+Because these methods will be used as the callback functions for the Express.js routes, each will take two parameters: req and res.
+The first method, getAllPizza(), will serve as the callback function for the GET /api/pizzas route. 
+It uses the Mongoose .find() method, much like the Sequelize .findAll() method.
+
+The second method, .getPizzaById(), uses the Mongoose .findOne() method to find a single pizza by its _id.
+In MongoDB, the methods for adding data to a collection are .insertOne() or .insertMany(). But in Mongoose,
+ we use the .create() method, which will actually handle either one or multiple inserts!
+ With this .findOneAndUpdate() method, Mongoose finds a single document we want to update, 
+ then updates it and returns the updated document. If we don't set that third parameter, { new: true }, 
+ it will return the original document. 
+ By setting the parameter to true, we're instructing Mongoose to return the new version of the document.
+
+ In this example, we use the Mongoose .findOneAndDelete() method, which will find the document to be returned and 
+ also delete it from the database. Like with updating, we could alternatively use .deleteOne() or .deleteMany(),
+  but we're using the .findOneAndDelete() method because it provides a little more data in case the client wants it.
+
+  Before we import the controller methods, 
+  let's dissect this new Express.js Router setup. Instead of creating duplicate routes for the individual HTTP methods, we can combine them!
+
+  Because we aren't actually writing the route functionality, this will keep the route files a lot cleaner and to the point. 
+  As an added benefit, 
+  it also abstracts the database methods from the routes, giving us the option to write unit tests with Jest.
+  Instead of importing the entire object and having to do pizzaController.getAllPizza(),
+   we can simply destructure the method names out of the imported object and use those names directly.
+   Let's implement them into the routes, starting with /api/pizzas. Update the code for router.route('/') as follows:
+
+   MongoDB automatically provides an _id so that you don't have to worry about setting it up like you would have to do in SQL.  
+   What's this __v field, though? It's not terribly important, but Mongoose adds this field for its own use of internal version tracking of a document.
+   On request, because we used .findOneAndUpdate() instead of just .updateOne(), we'll get the updated pizza's data as the response.
+
+   
