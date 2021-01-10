@@ -30,3 +30,10 @@ All of the MongoDB-based functions like $push start with a dollar sign ($),
  the stored data you are looking to retrieve and modifies or formats it upon return. Think of it like middleware for your data!
  To use a getter in Mongoose, we just need to add the key get to the field we are looking to use it with in the schema. 
  Just like a virtual, the getter will transform the data before it gets to the controller(s).
+ Now add a .catch() so that any error takes the user back to the home page, using the window.history.back() method
+ The window history API exposes methods that let us control the state of the browser's session.
+ nstead, let's take advantage of some of the flexibility that MongoDB provides and create replies as a subdocument array for comments
+
+ Now let's associate replies with comments. 
+ Update the CommentSchema to have the replies field populated with an array of data that adheres to the ReplySchema definition.
+  The replies field in CommentSchema should look like the following code:
