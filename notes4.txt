@@ -56,4 +56,8 @@ so every time it runs we check to see if the app is connected to the internet ne
  At that point, the getAll variable we created above it will have a 
  .result property that's an array of all the data we retrieved from the new_pizza object store.
  If there's data to send, we send that array of data we just retrieved to the server at the POST /api/pizzas endpoint. 
- 
+In this example, the enum option stands for enumerable, 
+a popular term in web development that refers to a set of data that can be iterated over
+If you want to provide a custom message for enumerable values, you need to look into implementing the validate option
+Mongoose lets you use, where you can create a custom function to test the values, just like you did with Inquirer!
+Mongoose only executes the validators automatically when we actually create new data. Not update data
