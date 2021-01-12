@@ -61,3 +61,9 @@ a popular term in web development that refers to a set of data that can be itera
 If you want to provide a custom message for enumerable values, you need to look into implementing the validate option
 Mongoose lets you use, where you can create a custom function to test the values, just like you did with Inquirer!
 Mongoose only executes the validators automatically when we actually create new data. Not update data
+If you don't want to merge to main prior to deploying, 
+like if you're deploying to a test production environment, you can use git push heroku <your-local-branch>:main.
+Heroku to host our database in production. Unfortunately, JawsDB only works with MySQL, so we'll need to use MongoDB Atlas instead.
+MongoDB Atlas is a cloud-based database service that's created and maintained by MongoDB. 
+It works with hosting services such as AWS, Azure, 
+and Google Cloud to help users provision, maintain, and secure new databases for their applications.

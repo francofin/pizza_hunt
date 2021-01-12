@@ -1,0 +1,10 @@
+Heroku to host our database in production. Unfortunately, JawsDB only works with MySQL, so we'll need to use MongoDB Atlas instead.
+MongoDB Atlas is a cloud-based database service that's created and maintained by MongoDB. 
+It works with hosting services such as AWS, Azure, 
+and Google Cloud to help users provision, maintain, and secure new databases for their applications.
+
+A cluster is simply a server that allows you to create and maintain multiple MongoDB databases.
+
+The good thing is we already have our database set up with MongoDB Atlas. All we need to do now is
+ create an application for Pizza Hunt on Heroku and add our production database connection URI string to it as an environment variable.
+
