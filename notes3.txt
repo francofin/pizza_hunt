@@ -41,4 +41,21 @@ Here, we're using the MongoDB $pull operator to
  to deliver a user experience that resembles a native mobile app. 
  These features include the ability to install the app on a home screen, activate push notifications, and provide an offline experience.
  Turning the entire application into a PWA could be quite a large ask, so the client wants us to explore how Pizza Hunt could offer offline capabilities without going that route.
- 
+We'll add IndexedDB so that the newly created pizzas get saved locally to the browser if there is no internet connection.
+
+Because most applications are data-centric, 
+running one typically involves a lot of communication with a server to send and retrieve that data.
+Browsers are simply computer or phone applications, which means they can leverage the features of those devices, 
+such as data storage and caching.
+We can't control the user's internet connection, but we can establish safety nets in case the pizza data fails to reach the server.
+To do this, we'll leverage browser-based storage to store data if it fails to send. 
+This way, we won't lose any data—it may just take a bit longer to reach the server.
+There are numerous ways to store data in a browser. We've previously used localStorage, which works well for storing one-off data.
+ But remember that it became a little more involved when we attempted to store something like an array of objects.
+ Because of this limitation, another Web API has become popular: IndexedDB.
+IndexedDB is more involved than localStorage, 
+as it can be set up to behave more like an actual database but is less restricted in the types of data that can be stored.
+localStorage only accepts primitive data types, like strings, numbers, and Booleans.
+Anything more complex, like an object or array, needs to be converted into a string to be stored correctly.
+
+With IndexedDB, we're basically provided with a blank slate of a database for each unique IP address or domain visited in a browser. 
